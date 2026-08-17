@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Which Member of the Burnham Government Are You?</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --paper:#fffdf8;
+    --ink:#191919;
+    --muted:#6b6861;
+    --line:#d9d2c5;
+    --accent:#7a1734;
+    --accent2:#23344f;
+    --soft:#eee8dc;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+    background:var(--bg);
+    color:var(--ink);
+  }
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:28px 18px 56px;
+  }
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:flex-start;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:10px;
+    margin-bottom:24px;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(0,0,0,.05);
+    padding:28px;
+  }
+  h1,h2,h3,p{margin-top:0}
+  h1{
+    font-size:clamp(38px,7vw,72px);
+    line-height:.96;
+    letter-spacing:-.035em;
+    margin-bottom:18px;
+  }
+  h2{
+    font-size:clamp(27px,4vw,40px);
+    line-height:1.05;
+    margin-bottom:16px;
+  }
+  .dek{
+    font-size:20px;
+    line-height:1.45;
+    max-width:720px;
+  }
+  .small{
+    color:var(--muted);
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    line-height:1.45;
+  }
+  button{
+    font:inherit;
+  }
+  .primary{
+    appearance:none;
+    border:none;
+    background:var(--ink);
+    color:white;
+    padding:14px 20px;
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:12px;
+  }
+  .primary:hover{opacity:.88}
+  .progress-wrap{
+    margin:0 0 22px;
+  }
+  .progress-top{
+    display:flex;
+    justify-content:space-between;
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:7px;
+  }
+  .progress{
+    height:7px;
+    background:var(--soft);
+    overflow:hidden;
+  }
+  .progress > div{
+    height:100%;
+    width:0;
+    background:var(--accent2);
+    transition:width .25s ease;
+  }
+  .question{
+    font-size:30px;
+    line-height:1.12;
+    margin-bottom:20px;
+  }
+  .answers{
+    display:grid;
+    gap:10px;
+  }
+  .answer{
+    width:100%;
+    text-align:left;
+    border:1px solid var(--line);
+    background:white;
+    padding:15px 16px;
+    cursor:pointer;
+    line-height:1.38;
+    font-size:16px;
+  }
+  .answer:hover{
+    border-color:var(--ink);
+    background:#faf7f0;
+  }
+  .answer:focus-visible{
+    outline:3px solid #9db3d1;
+    outline-offset:2px;
+  }
+  .result-kicker{
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--accent);
+    font-weight:800;
+    font-size:13px;
+    margin-bottom:8px;
+  }
+  .result-name{
+    font-size:clamp(42px,8vw,76px);
+    line-height:.95;
+    margin-bottom:8px;
+  }
+  .result-archetype{
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    font-weight:800;
+    font-size:22px;
+    color:var(--accent2);
+    margin-bottom:24px;
+  }
+  .result-copy{
+    font-size:20px;
+    line-height:1.5;
+    max-width:730px;
+    margin-bottom:20px;
+  }
+  .result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:24px 0;
+  }
+  .mini{
+    border-top:3px solid var(--ink);
+    padding-top:10px;
+  }
+  .mini strong{
+    display:block;
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.07em;
+    font-size:11px;
+    margin-bottom:7px;
+  }
+  .actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:24px;
+  }
+  .secondary{
+    appearance:none;
+    border:1px solid var(--ink);
+    background:transparent;
+    padding:13px 17px;
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .hidden{display:none}
+  .foot{
+    color:var(--muted);
+    font-family:ui-sans-serif, system-ui, sans-serif;
+    font-size:12px;
+    margin-top:18px;
+  }
+  @media(max-width:650px){
+    .card{padding:20px}
+    .result-grid{grid-template-columns:1fr}
+    .question{font-size:25px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span>Cabinet Personality Assessment</span>
+    <span>Unofficial & extremely scientific</span>
+  </div>
+
+  <section id="intro" class="card">
+    <h1>Which Member of the Burnham Government Are You?</h1>
+    <p class="dek">You’ve been unexpectedly summoned to Downing Street. Nobody is entirely clear how this happened, but you now appear to have significant influence over government policy.</p>
+    <p class="small">Six questions. Answer instinctively. There are no wrong answers, although the Treasury may disagree.</p>
+    <button class="primary" id="startBtn">Enter government</button>
+  </section>
+
+  <section id="quiz" class="card hidden">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="qCount">Question 1 of 6</span><span id="percent">17%</span></div>
+      <div class="progress"><div id="progressBar"></div></div>
+    </div>
+    <h2 class="question" id="questionText"></h2>
+    <div class="answers" id="answers"></div>
+  </section>
+
+  <section id="result" class="card hidden">
+    <div class="result-kicker">Your result</div>
+    <h2 class="result-name" id="resultName"></h2>
+    <div class="result-archetype" id="resultArchetype"></div>
+    <p class="result-copy" id="resultCopy"></p>
+
+    <div class="result-grid">
+      <div class="mini"><strong>Health superpower</strong><span id="superpower"></span></div>
+      <div class="mini"><strong>Fatal flaw</strong><span id="fatalFlaw"></span></div>
+      <div class="mini"><strong>Your fictional government job</strong><span id="fictionalJob"></span></div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="restartBtn">Take it again</button>
+      <button class="secondary" id="copyBtn">Copy my result</button>
+    </div>
+    <div class="foot">For team entertainment, not constitutional guidance.</div>
+  </section>
+</div>
+
+<script>
+const people = {
+  burnham: {
+    name: "Andy Burnham",
+    archetype: "The Localist",
+    copy: "Your instinct is to ask whether Whitehall really needs to be making this decision at all. You think health is inseparable from transport, housing, jobs and place. If a national programme is not working, you would rather give local leaders more freedom and let places work out what actually works for their populations.",
+    superpower: "Seeing the whole local system.",
+    flaw: "You can turn almost any national policy discussion into an argument for giving local areas more power.",
+    job: "Secretary of State for Giving Places the Powers, Actually."
+  },
+  cooper: {
+    name: "Yvette Cooper",
+    archetype: "The Grown-Up",
+    copy: "You would quite like everyone to stop ideating for a moment and establish what is actually happening. Evidence, delivery, measurable outcomes and accountability are extremely unfashionable right up until something goes wrong, at which point everyone suddenly wants you in the room.",
+    superpower: "Turning a horrifying briefing into three decisions.",
+    flaw: "You have identified eleven implementation risks before everyone else has finished saying ‘transformation’.",
+    job: "Minister for Actually Reading the Submission."
+  },
+  healey: {
+    name: "John Healey",
+    archetype: "The Fiscal Realist",
+    copy: "Everybody has had a wonderful idea. You have opened Excel. You do not necessarily oppose spending money. You simply have some apparently outrageous follow-up questions such as ‘how much?’, ‘for how long?’ and ‘what happens after 2029?’",
+    superpower: "Distinguishing an investment from something somebody has simply called an investment.",
+    flaw: "People stop inviting you to brainstorms.",
+    job: "Secretary of State for Where Exactly Is This Money Coming From?"
+  },
+  miliband: {
+    name: "Ed Miliband",
+    archetype: "The Big Thinker",
+    copy: "You have never knowingly encountered a problem that could not benefit from a larger theory of change. Health inequalities? Let’s discuss the economic model. Prevention? Let’s discuss the role of the state. Someone asks where you want lunch? There are structural questions we need to address first.",
+    superpower: "Remembering why we are actually doing any of this.",
+    flaw: "The strategy is now 94 pages.",
+    job: "Secretary of State for Zooming Out."
+  },
+  streeting: {
+    name: "Wes Streeting",
+    archetype: "The Political Fighter",
+    copy: "Policy is no use if nobody notices it, understands it or believes you are capable of delivering it. You like clear choices, visible reform and arguments you can actually win. Where others see a nuanced implementation challenge, you can already see tomorrow morning’s broadcast round.",
+    superpower: "Making an obscure policy problem sound like something normal people might conceivably care about.",
+    flaw: "You have said ‘put me on the Today programme’ before discovering what the question is.",
+    job: "Minister for Having a Line on This by 7am."
+  },
+  narayan: {
+    name: "Kanishka Narayan",
+    archetype: "The Technologist",
+    copy: "Someone says the system is overwhelmed. You hear: interesting optimisation problem. You are attracted to data, experimentation and technology that might let government do something genuinely differently, rather than digitising exactly the same terrible process.",
+    superpower: "Seeing possibilities everyone else thinks are five years away.",
+    flaw: "You have said ‘AI’ three times and Information Governance has entered the room.",
+    job: "Minister for Could We Automate This?"
+  },
+  mcfadden: {
+    name: "Pat McFadden",
+    archetype: "The Work & Health Person",
+    copy: "Other people keep drawing neat boxes around ‘health policy’ and ‘economic policy’. You keep erasing the line. Employment, productivity, skills, long-term sickness and population health are obviously connected, and you cannot understand why everybody else keeps arranging separate conferences about them.",
+    superpower: "Making population health economically impossible to ignore.",
+    flaw: "Someone asks about dentistry and you somehow end up discussing labour-force participation.",
+    job: "Secretary of State for Yes, But What Does This Mean for Economic Inactivity?"
+  },
+  haigh: {
+    name: "Louise Haigh",
+    archetype: "The Fixer",
+    copy: "Enough strategies. What happens next? Your natural habitat is the bit between a minister announcing an ambitious policy and somebody, somewhere, having to make it real. You do not necessarily need another vision document. You need an owner, a deadline and possibly a very large diagram.",
+    superpower: "Making different bits of government behave briefly as though they are part of the same organisation.",
+    flaw: "You have created a delivery board to oversee the delivery board.",
+    job: "Minister for Right, Who’s Actually Doing This?"
+  }
+};
+
+const questions = [
+  {
+    q: "The NHS unexpectedly gets another £2 billion. Where does your mind go first?",
+    answers: [
+      {t:"Primary and community care. Get more decisions closer to the places actually delivering services.", main:"burnham", secondary:"haigh"},
+      {t:"Waiting lists. Pick a measurable problem and make the numbers move.", main:"cooper", secondary:"streeting"},
+      {t:"Before spending it: what are we stopping, what return are we getting, and is this actually recurrent funding?", main:"healey", secondary:"cooper"},
+      {t:"Prevention. If we spend all of it treating illness after it happens, we’ve missed the point.", main:"miliband", secondary:"burnham"},
+      {t:"Reform. Money is useful, but only if we’re willing to change how services actually work.", main:"streeting", secondary:"cooper"},
+      {t:"Digital infrastructure. There is no defensible reason a modern health service should still run quite so much of itself through PDFs and spreadsheets.", main:"narayan", secondary:"haigh"},
+      {t:"Workforce and economic inactivity. Health spending and getting people back into good work are part of the same problem.", main:"mcfadden", secondary:"healey"},
+      {t:"Fine — but who is actually responsible for delivering this, by when, and what happens on Monday morning?", main:"haigh", secondary:"cooper"}
+    ]
+  },
+  {
+    q: "You have five years to make a meaningful dent in healthy life expectancy. What gets your attention?",
+    answers: [
+      {t:"Give local areas much more freedom to join up health, housing, transport and public services around their populations.", main:"burnham", secondary:"miliband"},
+      {t:"Identify the groups with the worst outcomes and relentlessly focus programmes on them.", main:"cooper", secondary:"haigh"},
+      {t:"Work out which interventions genuinely give us the biggest improvement for the money.", main:"healey", secondary:"cooper"},
+      {t:"Housing, poverty, early years and inequality. Stop pretending this is principally a healthcare problem.", main:"miliband", secondary:"burnham"},
+      {t:"Make prevention politically tangible enough that people can actually see what government is doing.", main:"streeting", secondary:"miliband"},
+      {t:"Much better population data and predictive tools so intervention happens earlier.", main:"narayan", secondary:"cooper"},
+      {t:"Work and economic participation. Being healthy enough to work — and having good work — matters enormously.", main:"mcfadden", secondary:"miliband"},
+      {t:"Force departments to have one plan rather than seven adjacent strategies all claiming to be ‘joined up’.", main:"haigh", secondary:"cooper"}
+    ]
+  },
+  {
+    q: "A health-tech company says its new AI tool can save every clinician two hours a day. Your first response?",
+    answers: [
+      {t:"Great. Find somewhere willing to try it and start learning.", main:"burnham", secondary:"narayan"},
+      {t:"Show me the evidence, safety data and what clinicians actually think of it.", main:"cooper", secondary:"healey"},
+      {t:"Two hours multiplied by the workforce is a very big claim. Show me the numbers.", main:"healey", secondary:"cooper"},
+      {t:"Interesting — but will it improve access equally, or make existing inequalities worse?", main:"miliband", secondary:"burnham"},
+      {t:"If it genuinely gives clinicians more time with patients, why are we moving so slowly?", main:"streeting", secondary:"narayan"},
+      {t:"Finally. Someone bring me a whiteboard.", main:"narayan", secondary:"haigh"},
+      {t:"Could this particularly help people whose health conditions make staying in work difficult?", main:"mcfadden", secondary:"narayan"},
+      {t:"Lovely demo. Now show me how it fits into an actual service without creating four new processes and a login nobody remembers.", main:"haigh", secondary:"cooper"}
+    ]
+  },
+  {
+    q: "The Treasury rejects your prevention programme because most of the savings won’t appear for 15 years. What do you do?",
+    answers: [
+      {t:"Let local areas retain more of the benefits when their interventions work.", main:"burnham", secondary:"healey"},
+      {t:"Find intermediate outcomes we can measure now and build the evidence relentlessly.", main:"cooper", secondary:"healey"},
+      {t:"I am the Treasury in this scenario. Your programme needs a better business case.", main:"healey", secondary:"cooper"},
+      {t:"Fight the premise. Governments making only five-year decisions is precisely why prevention gets neglected.", main:"miliband", secondary:"streeting"},
+      {t:"Make the public case for why spending earlier is preferable to spending much more later.", main:"streeting", secondary:"miliband"},
+      {t:"Use modelling and better data to demonstrate the long-term return much more convincingly.", main:"narayan", secondary:"healey"},
+      {t:"Reframe it around employment, productivity and people remaining economically active.", main:"mcfadden", secondary:"healey"},
+      {t:"Fine. Give me three departments, a pilot area and six months. We’re proving this works.", main:"haigh", secondary:"cooper"}
+    ]
+  },
+  {
+    q: "Your flagship policy is polling terribly. What do you do?",
+    answers: [
+      {t:"Find somewhere willing to try it locally and prove that it works.", main:"burnham", secondary:"haigh"},
+      {t:"Commission more research. There is clearly something the public hasn’t understood yet.", main:"cooper", secondary:"miliband"},
+      {t:"Ask whether the polling company has modelled the fiscal consequences of the alternative.", main:"healey", secondary:"cooper"},
+      {t:"Give a 14-minute answer explaining why the policy is historically necessary. The interviewer asked for 30 seconds.", main:"miliband", secondary:"streeting"},
+      {t:"Put me on television.", main:"streeting", secondary:"cooper"},
+      {t:"Launch an interactive online tool explaining the policy. Somehow this now involves AI.", main:"narayan", secondary:"streeting"},
+      {t:"Reframe the entire thing around jobs and economic growth.", main:"mcfadden", secondary:"streeting"},
+      {t:"Change the name, simplify the announcement, move three responsibilities between departments and relaunch on Monday.", main:"haigh", secondary:"streeting"}
+    ]
+  },
+  {
+    q: "It’s 8:03am in Westminster. What are you currently doing?",
+    answers: [
+      {t:"Doing a Reddit AMA in an attempt to speak directly to voters. Your private office has several concerns.", main:"burnham", secondary:"streeting"},
+      {t:"Reading the briefing note everyone else appears to have merely opened.", main:"cooper", secondary:"haigh"},
+      {t:"Looking at a spreadsheet and quietly ruining somebody’s morning.", main:"healey", secondary:"cooper"},
+      {t:"Sending colleagues a long article with the message: ‘This is really worth reading.’", main:"miliband", secondary:"burnham"},
+      {t:"Preparing for a broadcast interview nobody asked you to volunteer for.", main:"streeting", secondary:"burnham"},
+      {t:"Testing a new piece of technology that somebody assured you was ‘basically ready’.", main:"narayan", secondary:"haigh"},
+      {t:"Explaining that this health issue is, in fact, also a labour-market issue.", main:"mcfadden", secondary:"healey"},
+      {t:"Already on your third meeting. Two have been cancelled and somehow you attended both.", main:"haigh", secondary:"cooper"}
+    ]
+  }
+];
+
+let current = 0;
+let scores = {};
+let lastMain = null;
+
+function resetScores(){
+  scores = {};
+  Object.keys(people).forEach(k => scores[k] = 0);
+}
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function showQuestion(){
+  const q = questions[current];
+  document.getElementById("qCount").textContent = `Question ${current+1} of ${questions.length}`;
+  const pct = Math.round(((current+1)/questions.length)*100);
+  document.getElementById("percent").textContent = `${pct}%`;
+  document.getElementById("progressBar").style.width = `${pct}%`;
+  document.getElementById("questionText").textContent = q.q;
+  const box = document.getElementById("answers");
+  box.innerHTML = "";
+  shuffle(q.answers).forEach(ans => {
+    const b = document.createElement("button");
+    b.className = "answer";
+    b.textContent = ans.t;
+    b.onclick = () => choose(ans);
+    box.appendChild(b);
+  });
+}
+function choose(ans){
+  scores[ans.main] += 2;
+  scores[ans.secondary] += 1;
+  if(current === questions.length-1) lastMain = ans.main;
+  current++;
+  if(current < questions.length){
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+function showResult(){
+  let max = Math.max(...Object.values(scores));
+  let leaders = Object.keys(scores).filter(k => scores[k] === max);
+
+  let winner;
+  if(leaders.length === 1){
+    winner = leaders[0];
+  } else if(lastMain && leaders.includes(lastMain)){
+    winner = lastMain;
+  } else {
+    winner = leaders[Math.floor(Math.random()*leaders.length)];
+  }
+
+  const p = people[winner];
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  document.getElementById("resultName").textContent = p.name;
+  document.getElementById("resultArchetype").textContent = p.archetype;
+  document.getElementById("resultCopy").textContent = p.copy;
+  document.getElementById("superpower").textContent = p.superpower;
+  document.getElementById("fatalFlaw").textContent = p.flaw;
+  document.getElementById("fictionalJob").textContent = p.job;
+}
+function startQuiz(){
+  current = 0;
+  lastMain = null;
+  resetScores();
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+document.getElementById("startBtn").onclick = startQuiz;
+document.getElementById("restartBtn").onclick = startQuiz;
+document.getElementById("copyBtn").onclick = async () => {
+  const text = `I got ${document.getElementById("resultName").textContent} — ${document.getElementById("resultArchetype").textContent} — in “Which Member of the Burnham Government Are You?”`;
+  try{
+    await navigator.clipboard.writeText(text);
+    document.getElementById("copyBtn").textContent = "Copied";
+    setTimeout(()=>document.getElementById("copyBtn").textContent="Copy my result",1200);
+  }catch(e){
+    alert(text);
+  }
+};
+
+resetScores();
+</script>
+</body>
+</html>
